@@ -5,4 +5,5 @@ abstract class Routes {
   static const CADASTRO = '/cadastro';
   static const RECUPERAR_SENHA = '/recuperar-senha';
   static const TABS_MENU = '/tabs-menu';
+  static const HOME_PASSAGEIRO = '/home-passageiro';
 }

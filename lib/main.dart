@@ -20,7 +20,7 @@ void main() async {
     title: 'BateVolta',
     debugShowCheckedModeBanner: false,
     getPages: AppPages.routes,
-    initialRoute: Routes.SPLASH,
+    initialRoute: Routes.HOME_PASSAGEIRO,
     theme: appThemeData,
   ));
 }

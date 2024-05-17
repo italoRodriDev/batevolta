@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 
 import '../core/colors.dart';
+import '../ui/view/auth/home-passageiro/home-passageiro.page.dart';
 import '../ui/view/auth/intro/intro.page.dart';
 import '../ui/view/auth/splash/splash.page.dart';
 import '../ui/view/tabs-menu/tabs_controller.component.dart';
@@ -20,6 +21,12 @@ class AppPages {
     GetPage(
       name: Routes.INTRO,
       page: () => IntroPage(),
+      transition: animation,
+      transitionDuration: const Duration(milliseconds: timeAnimation),
+    ),
+    GetPage(
+      name: Routes.HOME_PASSAGEIRO,
+      page: () => HomePassageiroPage(),
       transition: animation,
       transitionDuration: const Duration(milliseconds: timeAnimation),
     ),

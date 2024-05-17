@@ -4,9 +4,7 @@ import 'package:permission_handler/permission_handler.dart';
 class PermissionsService extends GetxService {
   requestPermissions() async {
     Map<Permission, PermissionStatus> statuses = await [
-      Permission.storage,
-      Permission.camera,
-      Permission.photos
+      Permission.location,
     ].request();
 
     if (statuses[Permission.notification.isPermanentlyDenied] != null) {
