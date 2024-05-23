@@ -18,6 +18,7 @@ class HomePassageiroPage extends GetView {
   @override
   Widget build(BuildContext context) {
     Get.find<PermissionsService>().requestPermissions();
+    ctrl.getCurrentLocation();
     return GetBuilder<HomeController>(
         init: ctrl,
         builder: (_) {
@@ -27,33 +28,42 @@ class HomePassageiroPage extends GetView {
                   body: SafeArea(
                       child: SingleChildScrollView(
                     child: Column(children: [
-                      Container(
-                          color: AppColor.warning,
-                          height: 60,
-                          child: Row(
-                            children: [
-                              const Icon(Icons.location_pin),
-                              const SizedBox(width: 4),
-                              Padding(
-                                  padding: EdgeInsets.only(top: 10),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                      ValueListenableBuilder(
+                          valueListenable: ctrl.locationEnabled,
+                          builder: (context, bool enabled, child) {
+                            if (enabled == false) {
+                              return Container(
+                                  color: AppColor.warning,
+                                  height: 60,
+                                  child: Row(
                                     children: [
-                                      TextComponent(
-                                        value:
-                                            'Compartilhamento de localização desativado.',
-                                        fontSize: 12,
-                                      ),
-                                      TextComponent(
-                                          value: 'Toque aqui para ativar...',
-                                          fontSize: 12),
+                                      const Icon(Icons.location_pin),
+                                      const SizedBox(width: 4),
+                                      Padding(
+                                          padding: EdgeInsets.only(top: 10),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              TextComponent(
+                                                value:
+                                                    'Compartilhamento de localização desativado.',
+                                                fontSize: 12,
+                                              ),
+                                              TextComponent(
+                                                  value:
+                                                      'Toque aqui para ativar...',
+                                                  fontSize: 12),
+                                            ],
+                                          )),
+                                      const SizedBox(width: 4),
+                                      const Icon(Icons.arrow_forward)
                                     ],
-                                  )),
-                              const SizedBox(width: 4),
-                              const Icon(Icons.arrow_forward)
-                            ],
-                          )),
+                                  ));
+                            } else {
+                              return Container();
+                            }
+                          }),
                       TabsComponent(
                           fontSize: 16,
                           colorTab: Colors.black,
@@ -83,7 +93,7 @@ class HomePassageiroPage extends GetView {
                     ctrl.editPesquisaDestino.clear();
                     ctrl.update();
                     await showModalBottomSheet(
-                       backgroundColor: Colors.transparent,
+                      backgroundColor: Colors.transparent,
                       isScrollControlled: true,
                       context: context,
                       builder: (BuildContext context) {

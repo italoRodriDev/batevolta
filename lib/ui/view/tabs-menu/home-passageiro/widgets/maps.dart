@@ -1,6 +1,9 @@
 import 'dart:async';
 
+import 'package:batevolta/controllers/home.controller.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class MapsComponent extends StatefulWidget {
@@ -15,29 +18,40 @@ class MapsComponentState extends State<MapsComponent> {
       Completer<GoogleMapController>();
 
   static const CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(-7.128503932697672, -34.821896279992934),
+    target: LatLng(-7.1935402, -34.8615718),
     zoom: 14.4746,
   );
 
   static const CameraPosition _kLake = CameraPosition(
-      bearing: 192.8334901395799,
-      target: LatLng(-7.128503932697672, -34.821896279992934),
+      bearing: 0.9,
+      target: LatLng(-7.1935402, -34.8615718),
       tilt: 59.440717697143555,
       zoom: 19.151926040649414);
 
   @override
   Widget build(BuildContext context) {
-    return GoogleMap(
-        mapType: MapType.normal,
-        initialCameraPosition: _kGooglePlex,
-        onMapCreated: (GoogleMapController controller) {
-          _controller.complete(controller);
-        },
-      );
-  }
+    HomeController ctrl = Get.put(HomeController());
+    final Set<Marker> markers = {};
 
-  Future<void> _goToTheLake() async {
-    final GoogleMapController controller = await _controller.future;
-    await controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
+    markers.add(
+      Marker(
+        markerId: MarkerId('initial_marker'),
+        position: LatLng(-7.1935402, -34.8615718),
+        infoWindow: InfoWindow(
+          title: 'Initial Position',
+          snippet: 'This is the initial position',
+        ),
+        icon: BitmapDescriptor.defaultMarker,
+      ),
+    );
+
+    return GoogleMap(
+      mapType: MapType.normal,
+      initialCameraPosition: _kGooglePlex,
+      markers: markers,
+      onMapCreated: (GoogleMapController controller) {
+        _controller.complete(controller);
+      },
+    );
   }
 }
